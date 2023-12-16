@@ -28,7 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['8000-deemccart-boutiqueado-s9rkzc170pr.ws-eu106.gitpod.io', 
                  '8000-deemccart-boutiqueado-s9rkzc170pr.ws-us106.gitpod.io',
-                 '8000-deemccart-boutiqueado-s9rkzc170pr.ws-eu107.gitpod.io']
+                 '8000-deemccart-boutiqueado-s9rkzc170pr.ws-eu107.gitpod.io',
+                 '8000-deemccart-boutiqueado-s9rkzc170pr.ws-us107.gitpod.io']
 
 
 # Application definition
@@ -73,11 +74,14 @@ TEMPLATES = [
                 'django.template.context_processors.request', #required by allauth
                 'django.contrib.auth.context_processors.auth', 
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
                 'bag.contexts.bag_contents',
             ],
         },
     },
 ]
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`

@@ -31,7 +31,9 @@ def cache_checkout_data(request):
 
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
+    print('Stripe public key is ', stripe_public_key)
     stripe_secret_key = settings.STRIPE_SECRET_KEY
+    print('Stripe public key is ', stripe_public_key)
 
     if request.method == 'POST':
         ''' successful payment should trigger creation of an order '''
@@ -103,6 +105,10 @@ def checkout(request):
     if not stripe_public_key:
         messages.warning(request, 'Stripe public key is missing. \
             Did you forget to set it in your environment?')
+
+    if not stripe_secret_key:
+        messages.warning(request, 'Stripe secret key is missing. \
+            Where the heck is this supposed to be set in your environment?')
 
     template = 'checkout/checkout.html'
     context = {

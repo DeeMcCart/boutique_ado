@@ -57,6 +57,7 @@ form.addEventListener('submit', function(ev) {
     var saveInfo = Boolean($('#id-save-info').attr('checked'));
     // From using {% csrf_token %} in the form
     var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+    // pass this information to the view cache_checkout_data
     var postData = {
         'csrfmiddlewaretoken': csrfToken,
         'client_secret': clientSecret,
@@ -64,6 +65,8 @@ form.addEventListener('submit', function(ev) {
     };
     var url = '/checkout/cache_checkout_data/';
 
+    // Post the above data to the URL
+    // wait for a response that the call was done
     $.post(url, postData).done(function () {
         stripe.confirmCardPayment(clientSecret, {
             payment_method: {
@@ -111,7 +114,7 @@ form.addEventListener('submit', function(ev) {
                 card.update({ 'disabled': false});
                 $('#submit-button').attr('disabled', false);
             } else {
-                // the payment has been p4ocessed!
+                // the payment has been processed!
                 if (result.paymentIntent.status === 'succeeded') {
                     // show a success message to your customer
                     // There's a risk of the customer closing the window before callback

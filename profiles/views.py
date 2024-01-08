@@ -2,8 +2,6 @@ from django.shortcuts import render, get_object_or_404
 from .models import UserProfile
 from checkout.models import Order
 from django.contrib import messages
-# Create your views here.
-from django.shortcuts import render
 from .forms import UserProfileForm
 
 
@@ -16,12 +14,13 @@ def profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile updated successfully')
-
-
-
+        else:
+            messages.error(request, 'Update failed. Please ensure the form is valid.')
+    else:
+        form = UserProfileForm(instance=profile)
+    
     orders = profile.orders.all()
 
-    form = UserProfileForm(instance=profile)
     template = 'profiles/profile.html'
     context = {
         'form': form,
@@ -30,6 +29,7 @@ def profile(request):
     }
 
     return render(request, template, context)
+
 
 def order_history(request, order_number):
     order = get_object_or_404(Order, order_number=order_number)

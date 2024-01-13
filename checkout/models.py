@@ -35,7 +35,13 @@ class Order(models.Model):
         """
         Generate a random, unique order number using UUID
         """
-        return uuid.uuid4().hex.upper()
+        current_order_number = settings.CURRENT_ORDER_NUMBER
+        print(f'Current order number ', current_order_number)
+        next_order_number += current_order_number
+        print(f'Next order number ', next_order_number)
+        settings.CURRENT_ORDER_NUMBER = next_order_number
+        return next_order_number
+
 
     def update_total(self):
         """
